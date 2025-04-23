@@ -1,3 +1,10 @@
+#MERN Stack App
+The MERN stack is a web development framework consisting of MongoDB, Express, React.js, and Node.js. It is one of several variants of the MEAN stack. 
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

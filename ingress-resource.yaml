@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: http-ingress
+spec:
+  rules:
+    - host: aj.test
+      http:
+        paths:
+          - path: /front
+            pathType: Prefix
+            backend:
+              service:
+                name: front
+                port:
+                  number: 3000

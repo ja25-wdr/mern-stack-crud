@@ -5,7 +5,7 @@ metadata:
   labels:
     app: front
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: front
@@ -16,12 +16,16 @@ spec:
     spec:
       containers:
         - name: front
-          image: localhost:32000/front:local
+          image: localhost:32000/mern-front:local
           ports:
             - containerPort: 3000
           env:
             - name: REACT_APP_BACKEND_URL
-              value: 'http://10.152.183.47:4000'
+              valueFrom:
+                configMapKeyRef:
+                  name: mernconfigmap
+                  key: express_api_url
+
 ---
 apiVersion: v1
 kind: Service
@@ -35,3 +39,11 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mernconfigmap
+data:
+  express_api_url: 'http://10.152.183.207:4000'
