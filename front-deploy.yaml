@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  labels:
+    app: front
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+        - name: front
+          image: localhost:32000/front:local
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_BACKEND_URL
+              value: 'http://10.152.183.47:4000'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front
+spec:
+  selector:
+    app: front
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

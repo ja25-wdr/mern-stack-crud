@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back
+  labels:
+    app: back  
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: back 
+  template:
+    metadata:
+      labels:
+        app: back
+    spec:
+      containers:
+        - name: back
+          image: localhost:32000/back:local
+          ports:
+            - containerPort: 4000
+          env:
+            - name: MONGODB_URI
+              value: "mongodb://mongodb-service.default.svc.cluster.local:27017/test"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: back
+spec:
+  selector:
+    app: back
+  type: NodePort  
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000
